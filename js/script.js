@@ -110,7 +110,28 @@ for(let i=0;i<21;i++){
         deletion(pos);
         pos++;
         generation(pos);
+        collision(pos);
+    }
+
+    function collision(xoffset){
+        for(let i=0;i<presentshape.length;i++){
+            let x = Math.floor(presentshape[i]/10);
+            let y = presentshape[i]%10;
+            const element = document.getElementById('block-'+(x+xoffset+1)+'-'+y);
+            if(element.classList.contains('border')||element.classList.contains('stopped')){
+                for(let j=0;j<presentshape.length;j++){
+                    let x = Math.floor(presentshape[j]/10);
+                    let y = presentshape[j]%10;
+                    const ele = document.getElementById('block-'+(x+xoffset)+'-'+y);
+                    ele.classList.add('stopped');
+                    randomshape = Math.floor(Math.random()*tetrominoes.length);
+                    presentshape = tetrominoes[randomshape][0];
+                    pos = 0;
+                    
+                }
+            }
+        }
     }
   
-    setInterval(moveDown,500);
+    setInterval(moveDown,200);
       
