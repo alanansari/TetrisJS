@@ -84,29 +84,33 @@ for(let i=0;i<21;i++){
    
    //generation of blocks
 
-   function generation(){ 
+   function generation(xoffset){ 
       for(let i=0;i<presentshape.length;i++){
         let x = Math.floor(presentshape[i]/10);
         let y = presentshape[i]%10;
-        const element = document.getElementById('block-'+x+'-'+y);
+        const element = document.getElementById('block-'+(x+xoffset)+'-'+y);
         // console.log('block-'+ x +'-'+ y);
         element.style.backgroundColor = 'bisque';
       }
     }
-    generation()
 
     // deletion of blocks
 
-    function deletion(){ 
+    function deletion(xoffset){ 
          for(let i=0;i<presentshape.length;i++){
            let x = Math.floor(presentshape[i]/10);
            let y = presentshape[i]%10;
-           const element = document.getElementById('block-'+x+'-'+y);
-           element.style.backgroundColor = ' ';
+           const element = document.getElementById('block-'+(x+xoffset)+'-'+y);
+           element.style.backgroundColor = '';
         }
     }
-         
     
-    deletion()
+    let pos = 0;
+    function moveDown(){
+        deletion(pos);
+        pos++;
+        generation(pos);
+    }
   
+    setInterval(moveDown,500);
       
