@@ -82,6 +82,8 @@ for(let i=0;i<21;i++){
    let randomshape = Math.floor(Math.random()*tetrominoes.length)
    let presentshape = tetrominoes[randomshape][0];
    
+   //generation of blocks
+
    function generation(){ 
       for(let i=0;i<presentshape.length;i++){
         let x = Math.floor(presentshape[i]/10);
@@ -93,15 +95,18 @@ for(let i=0;i<21;i++){
     }
     generation()
 
-    // function deletion(){ 
-    //     for(let i=0;i<presentshape.length;i++){
-    //       let x = Math.floor(presentshape[i]/10);
-    //       let y = presentshape[i]%10;
-    //       const element = document.getElementById('block-'+x+'-'+y);
-    //       // console.log('block-'+ x +'-'+ y);
-    //       element.style.backgroundColor = ' ';
-    //     }
-    // }
-    // deletion()
+    // deletion of blocks
+
+    function deletion(){ 
+         for(let i=0;i<presentshape.length;i++){
+           let x = Math.floor(presentshape[i]/10);
+           let y = presentshape[i]%10;
+           const element = document.getElementById('block-'+x+'-'+y);
+           element.style.backgroundColor = ' ';
+        }
+    }
+         
+    
+    deletion()
   
       
