@@ -12,10 +12,24 @@ body{
     font-size: 5vh;
 }
 #console{
+    position: relative;
     background-color: #000058;
     margin: 0 auto;
     border: 1vh solid goldenrod;
     border-radius: 2%;
     height: 80vh;
     width: 40vh;
+}
+.no-block{
+    position: absolute;
+    height: 3.9vh;
+    width: 3.9vh;
+    border: .1vh solid grey;
+}
+.block{
+    position: absolute;
+    height: 3.9vh;
+    width: 3.9vh;
+    border: .1vh solid goldenrod;
+    background-color: bisque;
 }
