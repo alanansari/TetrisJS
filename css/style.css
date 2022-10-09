@@ -26,13 +26,7 @@ body{
     width: 3.9vh;
     border: .1vh solid grey;
 }
-.block{
-    position: absolute;
-    height: 3.9vh;
-    width: 3.9vh;
-    border: .1vh solid goldenrod;
-    background-color: bisque;
-}
+
 .border{
     position: absolute;
     height: 4vh;
