@@ -34,29 +34,7 @@ const Itet = [
     [0,10,20,30]
 ];
 
-let grid1 = [
-    [0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0]
-];
+
 
 
 for(let i=0;i<21;i++){
@@ -65,9 +43,7 @@ for(let i=0;i<21;i++){
         newDiv.setAttribute("id","block-"+i+"-"+j);
         newDiv.style.top = i*4 + 'vh';
         newDiv.style.left = j*4 + 'vh';
-        if(grid1[i][j]==1 && i!=20)
-        newDiv.setAttribute("class","block");
-        else if(i!=20)
+        if(i!=20)
         newDiv.setAttribute("class","no-block");
         else
         newDiv.setAttribute("class","border");
@@ -81,57 +57,54 @@ for(let i=0;i<21;i++){
    //for random selection of shapes
    let randomshape = Math.floor(Math.random()*tetrominoes.length)
    let presentshape = tetrominoes[randomshape][0];
-   
-   //generation of blocks
+   let currpos = 0;
 
-   function generation(xoffset){ 
-      for(let i=0;i<presentshape.length;i++){
-        let x = Math.floor(presentshape[i]/10);
-        let y = presentshape[i]%10;
-        const element = document.getElementById('block-'+(x+xoffset)+'-'+y);
-        // console.log('block-'+ x +'-'+ y);
-        element.style.backgroundColor = 'bisque';
-      }
-    }
-
-    // deletion of blocks
-
-    function deletion(xoffset){ 
-         for(let i=0;i<presentshape.length;i++){
-           let x = Math.floor(presentshape[i]/10);
-           let y = presentshape[i]%10;
-           const element = document.getElementById('block-'+(x+xoffset)+'-'+y);
-           element.style.backgroundColor = '';
-        }
-    }
-    
-    let pos = 0;
-    function moveDown(){
-        deletion(pos);
-        pos++;
-        generation(pos);
-        collision(pos);
-    }
-
-    function collision(xoffset){
-        for(let i=0;i<presentshape.length;i++){
-            let x = Math.floor(presentshape[i]/10);
-            let y = presentshape[i]%10;
-            const element = document.getElementById('block-'+(x+xoffset+1)+'-'+y);
-            if(element.classList.contains('border')||element.classList.contains('stopped')){
-                for(let j=0;j<presentshape.length;j++){
-                    let x = Math.floor(presentshape[j]/10);
-                    let y = presentshape[j]%10;
-                    const ele = document.getElementById('block-'+(x+xoffset)+'-'+y);
-                    ele.classList.add('stopped');
-                    randomshape = Math.floor(Math.random()*tetrominoes.length);
-                    presentshape = tetrominoes[randomshape][0];
-                    pos = 0;
-                    
-                }
-            }
-        }
-    }
   
+    
+
+    // control movement of blocks
+
+    function control(input){
+        if(input==='a'||input==='ArrowLeft'){
+            moveLeft();
+        }
+        else if(input==='d'||input==='ArrowRight'){
+            moveRight();
+        }
+        else if(input==='s'||input==='ArrowDown'){
+            moveDown();
+        }
+    }
+    window.addEventListener('keydown',function(event){
+         control(event.key);
+        });
+    
+
+    //leftmovement of blocks
+   
+    function moveLeft(){
+        deletion();
+        leftmostblock = presentshape.some(index =>(currpos+index) % 10 == 0)
+        let blockage = presentshape.some(index =>square[currpos+index - 1].classlist.contains('stopped'));
+        if(!Feftmostblock && !blockage){
+            currpos--;
+        }
+        generation();   
+    }
+    moveLeft();
+
+    //rightmovement of blocks
+
+    function moveRight(){
+        deletion();
+        Rightmostblock = presentshape.some(index =>(currpos+index) % 10 == 9)
+        let blockage = presentshape.some(index =>square[currpos+index + 1].classlist.contains('stopped'));
+        if(!Rightmostblock && !blockage){
+            currpos++;
+        }
+        generation();   
+    }
+    moveRight();
+
+
     setInterval(moveDown,200);
-      
