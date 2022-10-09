@@ -117,6 +117,10 @@ for(let i=0;i<21;i++){
         else if(input=== 'w'||input==='ArrowUp'){
             rotation();
         }
+        else if(input === ' '){
+            pause();
+        }
+
     }
     window.addEventListener('keydown',function(event){
          control(event.key);
@@ -149,7 +153,7 @@ for(let i=0;i<21;i++){
         }
         generation();   
     }
-    
+   
     function rotation(){
         deletion();
         currRot++;
@@ -158,7 +162,20 @@ for(let i=0;i<21;i++){
         }
         presentshape = tetrominoes[random][currRot];
         generation();
-    }
+     }
+    
+  
+
+    function pause(){
+        if(myInterval){
+            clearInterval(myInterval);
+            myinterval= null;
+        }
+        else{
+            generation();
+            myInterval = setInterval(moveDown,500);
+        }
+}
 
     function endgame(){
         const block = document.querySelectorAll('.no-block');
