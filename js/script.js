@@ -43,7 +43,8 @@ const Itet = [
 ];
 
 
-
+const container = document.getElementById("console");
+let score = 0;
 
 for(let i=0;i<21;i++){
     for(let j=0;j<10;j++){
@@ -57,11 +58,12 @@ for(let i=0;i<21;i++){
             newDiv.setAttribute("class","border");
             newDiv.classList.add('stopped');
         }
-        const addNode = document.getElementById("console");
-        addNode.appendChild(newDiv);
+        container.appendChild(newDiv);
     }
 }
 
+
+let squares = Array.from(document.querySelectorAll('.no-block,.stopped'));
 let music = new Audio('audio/tetaudio.mp3');
 
 let bodySelector = document.querySelector('body');
@@ -69,7 +71,6 @@ bodySelector.addEventListener('click', function() {
     music.play();
 })
 
-    const squares = document.querySelectorAll('.no-block,.stopped');
 
     const tetrominoes = [Otet, Ttet, Ltet, Jtet, Stet, Ztet, Itet];
 
@@ -104,6 +105,7 @@ bodySelector.addEventListener('click', function() {
                 currpos = 4;
                 generation();
                 endgame();
+                remRow();
             }
         }
     }
@@ -176,13 +178,13 @@ bodySelector.addEventListener('click', function() {
     function pause(){
         if(myInterval){
             clearInterval(myInterval);
-            myInterval= null;
+            myInterval = null;
         }
         else{
             generation();
             myInterval = setInterval(moveDown,500);
         }
-}
+    }
 
     function endgame(){
         const block = document.querySelectorAll('.no-block');
@@ -195,6 +197,51 @@ bodySelector.addEventListener('click', function() {
         }
     }
 
+
+  function remRow(){
+      for(let i=0;i<199;i+=10){
+          let flag = true;
+          for(let j=0;j<10;j++){
+              if(!squares[i+j].classList.contains('stopped')){
+                  flag = false;
+              }
+          }
+          if(flag){
+              score+=10;
+              heading.innerHTML = "Score: "+score;
+              for(let j=0;j<10;j++){
+                  squares[i+j].classList.remove('stopped');
+                  squares[i+j].style.backgroundColor = '';
+              }
+              const squareRemoved = squares.splice(i,10);
+              squares = squareRemoved.concat(squares);
+              squares.forEach(square => container.appendChild(square));
+              changeallid();
+              redrawgrid();
+          }
+      }
+  }
+
+
+  function changeallid(){
+      for(let i=0;i<20;i++){
+          for(let j=0;j<10;j++){
+              let newid = 'block-'+i+'-'+j;
+              squares[i*10+j].id = newid;
+          }
+      }
+  }
+
+  function redrawgrid(){
+      for(let i=0;i<20;i++){
+          for(let j=0;j<10;j++){
+              const thisDiv = document.getElementById('block-'+i+'-'+j);
+              thisDiv.style.top = i*4 + 'vh';
+              thisDiv.style.left = j*4 + 'vh';
+          }
+      }
+  }
+
+     
+
     let myInterval = setInterval(moveDown,500);
-
-
