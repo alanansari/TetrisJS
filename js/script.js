@@ -59,10 +59,10 @@ for(let i=0;i<21;i++){
    const tetrominoes = [Otet, Ttet, Ltet, Jtet, Stet, Ztet, Itet]
 
    //for random selection of shapes
-   let randomshape = Math.floor(Math.random()*tetrominoes.length)
-   let presentshape = tetrominoes[randomshape][0];
    let currpos = 5;
-
+   let currRot = 0;
+   let randomshape = Math.floor(Math.random()*tetrominoes.length)
+   let presentshape = tetrominoes[randomshape][currRot];
   
     
    function generation(){ 
@@ -103,6 +103,9 @@ for(let i=0;i<21;i++){
         else if(input==='s'||input==='ArrowDown'){
             moveDown();
         }
+        else if(input=== 'w'||input==='ArrowUp'){
+            rotation();
+        }
     }
     window.addEventListener('keydown',function(event){
          control(event.key);
@@ -135,6 +138,15 @@ for(let i=0;i<21;i++){
         }
         generation();   
     }
-
+    
+    function rotation(){
+        deletion();
+        currRot++;
+        if(currRot == 4){
+            currRot = 0;
+        }
+        presentshape = tetrominoes[randomshape][currRot];
+        generation();
+    }
 
     setInterval(moveDown,200);
