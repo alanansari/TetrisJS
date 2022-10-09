@@ -1,5 +1,8 @@
 
 const Otet = [
+    [0,1,10,11],
+    [0,1,10,11],
+    [0,1,10,11],
     [0,1,10,11]
 ];
 const Ttet = [
@@ -11,27 +14,32 @@ const Ttet = [
 const Ltet = [
     [0,10,20,21],
     [10,11,12,2],
-    [0,1,11,12],
+    [0,1,11,21],
     [0,1,2,10]
 ];
 const Jtet = [
     [1,11,21,20],
     [0,10,11,12],
     [0,10,20,1],
-    [0,1,2,12]
+    [0,1,11,21]
 ];
 const Stet = [
     [10,11,1,2],
     [0,10,11,21],
-    [2,12,11,21]
+    [10,11,1,2],
+    [0,10,11,21]
 ];
 const Ztet = [
+    [0,1,11,12],
+    [1,11,10,20],
     [0,1,11,12],
     [1,11,10,20]
 ];
 const Itet = [
     [0,1,2,3],
-    [0,10,20,30]
+    [2,12,22,32],
+    [10,11,12,13],
+    [1,11,21,31]
 ];
 
 
@@ -54,26 +62,27 @@ for(let i=0;i<21;i++){
     }
 }
 
-    const squares = Array.from(document.querySelectorAll('#console div'));
+    const squares = document.querySelectorAll('.no-block,.stopped');
 
-   const tetrominoes = [Otet, Ttet, Ltet, Jtet, Stet, Ztet, Itet]
+    const tetrominoes = [Otet, Ttet, Ltet, Jtet, Stet, Ztet, Itet];
 
    //for random selection of shapes
-   let currpos = 5;
+   let currpos = 3;
    let currRot = 0;
-   let randomshape = Math.floor(Math.random()*tetrominoes.length)
-   let presentshape = tetrominoes[randomshape][currRot];
+   let random = Math.floor(Math.random()*tetrominoes.length);
+   let presentshape = tetrominoes[random][currRot];
   
     
    function generation(){ 
         presentshape.forEach(index=>{
             squares[index+currpos].style.backgroundColor = 'bisque';
-        })
+        });
     }
 
+    generation();
+    
     // deletion of blocks
-
-    function deletion(){ 
+    function deletion(){
         for(let i=0;i<presentshape.length;i++){
             squares[presentshape[i]+currpos].style.backgroundColor = '';
         }
@@ -86,6 +95,8 @@ for(let i=0;i<21;i++){
                 random = Math.floor(Math.random()*tetrominoes.length);
                 presentshape = tetrominoes[random][0];
                 currpos = 4;
+                generation();
+                endgame();
             }
         }
     }
@@ -122,7 +133,7 @@ for(let i=0;i<21;i++){
    
     function moveLeft(){
         deletion();
-        leftmostblock = presentshape.some( index =>(currpos+index) % 10 == 0);
+        let leftmostblock = presentshape.some( index =>(currpos+index) % 10 == 0);
         if(!leftmostblock){
             currpos--;
         }
@@ -131,7 +142,7 @@ for(let i=0;i<21;i++){
 
     function moveRight(){
         deletion();
-        Rightmostblock = presentshape.some(index =>(currpos+index) % 10 == 9);
+        let Rightmostblock = presentshape.some(index =>(currpos+index) % 10 == 9);
         
         if(!Rightmostblock){
             currpos++;
@@ -142,11 +153,22 @@ for(let i=0;i<21;i++){
     function rotation(){
         deletion();
         currRot++;
-        if(currRot == 4){
+        if(currRot === 4){
             currRot = 0;
         }
-        presentshape = tetrominoes[randomshape][currRot];
+        presentshape = tetrominoes[random][currRot];
         generation();
     }
 
-    setInterval(moveDown,200);
+    function endgame(){
+        const block = document.querySelectorAll('.no-block');
+        for(let i=0;i<=9;i++){
+            if(block[i].classList.contains('stopped')){
+                const heading = document.getElementById('heading');
+                heading.innerHTML = 'GAME OVER';
+                clearInterval(myInterval);
+            }
+        }
+    }
+
+    const myInterval = setInterval(moveDown,500);
