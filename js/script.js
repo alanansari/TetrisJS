@@ -106,6 +106,10 @@ for(let i=0;i<21;i++){
         else if(input=== 'w'||input==='ArrowUp'){
             rotation();
         }
+        else if(input === ' '){
+            pause();
+        }
+
     }
     window.addEventListener('keydown',function(event){
          control(event.key);
@@ -148,5 +152,17 @@ for(let i=0;i<21;i++){
         presentshape = tetrominoes[randomshape][currRot];
         generation();
     }
+    
+   let myinterval= setInterval(moveDown,500);
 
-    setInterval(moveDown,200);
+    function pause(){
+        if(myinterval){
+            clearInterval(myinterval);
+            myinterval= null;
+        }
+        else{
+            generation();
+            myinterval = setInterval(moveDown,500);
+        }
+
+    }
