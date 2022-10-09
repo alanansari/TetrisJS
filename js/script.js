@@ -62,6 +62,13 @@ for(let i=0;i<21;i++){
     }
 }
 
+let music = new Audio('audio/tetaudio.mp3');
+
+let bodySelector = document.querySelector('body');
+bodySelector.addEventListener('click', function() {
+    music.play();
+})
+
     const squares = document.querySelectorAll('.no-block,.stopped');
 
     const tetrominoes = [Otet, Ttet, Ltet, Jtet, Stet, Ztet, Itet];
@@ -169,7 +176,7 @@ for(let i=0;i<21;i++){
     function pause(){
         if(myInterval){
             clearInterval(myInterval);
-            myinterval= null;
+            myInterval= null;
         }
         else{
             generation();
@@ -188,4 +195,6 @@ for(let i=0;i<21;i++){
         }
     }
 
-    const myInterval = setInterval(moveDown,500);
+    let myInterval = setInterval(moveDown,500);
+
+
