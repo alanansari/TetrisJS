@@ -61,13 +61,14 @@ for(let i=0;i<21;i++){
         addNode.appendChild(newDiv);
     }
 }
-
+function tetmusic(){
 let music = new Audio('audio/tetaudio.mp3');
 
-let bodySelector = document.querySelector('body');
-bodySelector.addEventListener('click', function() {
+// let bodySelector = document.querySelector('body');
+// bodySelector.addEventListener('load', function() {
     music.play();
-})
+//})
+}
 
     const squares = document.querySelectorAll('.no-block,.stopped');
 
