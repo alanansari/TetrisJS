@@ -63,10 +63,24 @@ for(let i=0;i<21;i++){
 }
 
 let squares = Array.from(document.querySelectorAll('.no-block,.stopped'));
+let music = new Audio('audio/tetaudio.mp3');
+music.loop = true;
+const playbtn = document.getElementsByTagName('button');
+playbtn[0].addEventListener('click',tetmusic);
+const image = document.getElementsByTagName('img');
+let mplay = 0;
 
 function tetmusic(){
-  let music = new Audio('audio/tetaudio.mp3');
-    music.play();
+    if(mplay == 0){
+        music.play();
+        music.volume = 0.7;
+        image[0].src = 'img/play.png';
+        mplay=1;
+    }else{
+        music.pause();
+        image[0].src = 'img/mute.png';
+        mplay=0;
+    }
 }
 
 
@@ -145,7 +159,8 @@ function tetmusic(){
     function moveLeft(){
         deletion();
         let leftmostblock = presentshape.some( index =>(currpos+index) % 10 == 0);
-        if(!leftmostblock){
+        let blockage = presentshape.some(index => squares[currpos+index-1].classList.contains('stopped'));
+        if(!leftmostblock&&!blockage){
             currpos--;
         }
         generation();   
@@ -154,21 +169,29 @@ function tetmusic(){
     function moveRight(){
         deletion();
         let Rightmostblock = presentshape.some(index =>(currpos+index) % 10 == 9);
-        
-        if(!Rightmostblock){
+        let blockage = presentshape.some(index => squares[currpos+index+1].classList.contains('stopped'));
+        if(!Rightmostblock&&!blockage){
             currpos++;
         }
         generation();   
     }
    
     function rotation(){
-        deletion();
-        currRot++;
-        if(currRot === 4){
-            currRot = 0;
+        let nextrot = currRot + 1;
+        if(nextrot>=4) nextrot = 0;
+        let nextshape = tetrominoes[random][nextrot];
+        let border = nextshape.some(index => ((currpos+index-1)%10==9 && (currpos+index)%10==0));
+        let norot = nextshape.some(index => squares[currpos+index].classList.contains('stopped'));
+        if(!border&&!norot){
+            deletion();
+            currRot++;
+            if(currRot === 4){
+                currRot = 0;
+            }
+            presentshape = tetrominoes[random][currRot];
+            generation();
         }
-        presentshape = tetrominoes[random][currRot];
-        generation();
+        
      }
     
   
