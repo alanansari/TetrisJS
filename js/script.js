@@ -55,14 +55,17 @@ for(let i=0;i<21;i++){
         if(i!=20)
         newDiv.setAttribute("class","no-block");
         else{
-            newDiv.setAttribute("class","border");
-            newDiv.classList.add('stopped');
+            newDiv.setAttribute("class","stopped");
         }
         container.appendChild(newDiv);
     }
 }
 
 let squares = Array.from(document.querySelectorAll('.no-block,.stopped'));
+
+
+//                          GAME MUSIC
+
 let music = new Audio('audio/tetaudio.mp3');
 music.loop = true;
 const playbtn = document.getElementsByTagName('button');
@@ -92,15 +95,8 @@ function tetmusic(){
    let random = Math.floor(Math.random()*tetrominoes.length);
    let presentshape = tetrominoes[random][currRot];
 
-  const colors = [
-   "#FFD500",
-   "#40FF",
-   "#FF8C00",
-   "#C93662",
-   "#FF3213",
-   "#7CBB15",
-   "#30ADE5"
-  ]
+  const colors = ["#FFD500","#40FF","#FF8C00","#C93662","#FF3213","#7CBB15","#30ADE5"];
+  
    function generation(){ 
         presentshape.forEach(index=>{
             squares[index+currpos].style.backgroundColor = colors[random];
@@ -134,26 +130,27 @@ function tetmusic(){
     // control movement of blocks
 
     function control(input){
-        if(input==='a'||input==='ArrowLeft'){
+        if(input.key==='a'||input.key==='ArrowLeft'){
             moveLeft();
         }
-        else if(input==='d'||input==='ArrowRight'){
+        else if(input.key==='d'||input.key==='ArrowRight'){
             moveRight();
         }
-        else if(input==='s'||input==='ArrowDown'){
+        else if(input.key==='s'||input.key==='ArrowDown'){
             moveDown();
         }
-        else if(input=== 'w'||input==='ArrowUp'){
+        else if(input.key=== 'w'||input.key==='ArrowUp'){
             rotation();
         }
-        else if(input === ' '){
+        else if(input.key === ' '){
             pause();
+        }
+        else if(input.key === 'm'||input.key==='M'){
+            tetmusic();
         }
 
     }
-    window.addEventListener('keydown',function(event){
-         control(event.key);
-        });
+    window.addEventListener('keydown',control);
     
     
     function moveDown(){
@@ -222,6 +219,7 @@ function tetmusic(){
                 const heading = document.getElementById('heading');
                 heading.innerHTML = 'GAME OVER';
                 clearInterval(myInterval);
+                window.removeEventListener('keydown',control);
             }
         }
     }
