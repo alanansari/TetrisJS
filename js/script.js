@@ -62,14 +62,12 @@ for(let i=0;i<21;i++){
     }
 }
 
-
 let squares = Array.from(document.querySelectorAll('.no-block,.stopped'));
-let music = new Audio('audio/tetaudio.mp3');
 
-let bodySelector = document.querySelector('body');
-bodySelector.addEventListener('click', function() {
+function tetmusic(){
+  let music = new Audio('audio/tetaudio.mp3');
     music.play();
-})
+}
 
 
     const tetrominoes = [Otet, Ttet, Ltet, Jtet, Stet, Ztet, Itet];
