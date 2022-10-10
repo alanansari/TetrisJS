@@ -77,11 +77,19 @@ function tetmusic(){
    let currRot = 0;
    let random = Math.floor(Math.random()*tetrominoes.length);
    let presentshape = tetrominoes[random][currRot];
-  
-    
+
+  const colors = [
+   "#FFD500",
+   "#40FF",
+   "#FF8C00",
+   "#C93662",
+   "#FF3213",
+   "#7CBB15",
+   "#30ADE5"
+  ]
    function generation(){ 
         presentshape.forEach(index=>{
-            squares[index+currpos].style.backgroundColor = 'bisque';
+            squares[index+currpos].style.backgroundColor = colors[random];
         });
     }
 
