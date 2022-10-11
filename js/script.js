@@ -150,8 +150,43 @@ function tetmusic(){
         }
 
     }
+
     window.addEventListener('keydown',control);
     
+    // TOUCH CONTROLS
+
+    let touchstartX = 0, touchstartY = 0;
+    let touchendX = 0, touchendY = 0;
+
+    window.addEventListener('touchstart',function(event){
+        event.preventDefault();
+        touchstartX = event.touches[0].clientX;
+        touchstartY = event.touches[0].clientY;
+    });
+    
+    window.addEventListener('touchend',function(event){
+        touchendX = event.changedTouches[0].clientX;
+        touchendY = event.changedTouches[0].clientY;
+        handle();
+    });
+
+    function handle(){
+        let distX = Math.abs(touchstartX-touchendX);
+        let distY = Math.abs(touchstartY-touchendY);
+        if(!(distX<=50&&distY<=30)){
+            if(distX>distY){
+                if(touchstartX<touchendX)      // right
+                    moveRight();
+                if(touchstartX>touchendX)       // left
+                    moveLeft();
+            }else{
+                if(touchstartY<touchendY)       // down
+                    moveDown();
+                if(touchstartY>touchendY)       // up
+                    rotation();
+            }
+        }
+    }
     
     function moveDown(){
         deletion();
