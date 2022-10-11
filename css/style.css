@@ -10,14 +10,21 @@ body{
     color: goldenrod;
 
 }
-button{
+#btn1,#btn2{
     position: absolute;
-    top: 2vh;
-    left: 2vh;
     text-decoration: none;
     border: 0;
     border-radius: 10%;
+}
+#btn1{
+    top: 2vh;
+    left: 2vh;
     background-color: yellowgreen;
+}
+#btn2{
+    top:2vh;
+    right:2vh;
+    background-color: aquamarine;
 }
 button img{
     max-height: 5vh;
@@ -26,9 +33,9 @@ button img{
     display: none;
     position: absolute;
     top: 44vh;
-    left: 43vw;
+    left: 38vw;
     z-index: 1;
-    font-size: 6vh;
+    font-size: 5vw;
     border-radius: 5px;
 }
 
@@ -51,4 +58,11 @@ button img{
     height: 3.9vh;
     width: 3.9vh;
     border: .1vh solid grey;
+}
+
+@media (max-width: 800px){
+    #displayscore{
+        left:25vh;
+        font-size: 10vw;
+    }
 }

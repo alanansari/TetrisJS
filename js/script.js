@@ -68,8 +68,8 @@ let squares = Array.from(document.querySelectorAll('.no-block,.stopped'));
 
 let music = new Audio('audio/tetaudio.mp3');
 music.loop = true;
-const playbtn = document.getElementsByTagName('button');
-playbtn[0].addEventListener('click',tetmusic);
+const playbtn = document.getElementById('btn1');
+playbtn.addEventListener('click',tetmusic);
 const image = document.getElementsByTagName('img');
 let mplay = 0;
 
@@ -143,6 +143,13 @@ function tetmusic(){
             rotation();
         }
         else if(input.key === ' '){
+            if(game===1){
+                pausebtnimg.src = 'img/play-button.png';
+                game=0;
+            }else{
+                pausebtnimg.src = 'img/pause.png';
+                game=1;
+            }
             pause();
         }
         else if(input.key === 'm'||input.key==='M'){
@@ -187,6 +194,20 @@ function tetmusic(){
             }
         }
     }
+    
+    let game = 1;
+    const pausebtn = document.getElementById('btn2');
+    const pausebtnimg = document.getElementById('img2');
+    pausebtn.addEventListener('click',function(){
+        if(game===1){
+            pausebtnimg.src = 'img/play-button.png';
+            game=0;
+        }else{
+            pausebtnimg.src = 'img/pause.png';
+            game=1;
+        }
+        pause();
+    });
     
     function moveDown(){
         deletion();
