@@ -18,6 +18,16 @@ button{
 button img{
     max-height: 5vh;
 }
+#displayscore {
+    display: none;
+    position: absolute;
+    top: 44vh;
+    left: 43vw;
+    z-index: 1;
+    font-size: 6vh;
+    border-radius: 5px;
+}
+
 #heading{
     padding: 1vh 0;
     text-align: center;

@@ -96,7 +96,7 @@ function tetmusic(){
    let presentshape = tetrominoes[random][currRot];
 
   const colors = ["#FFD500","#40FF","#FF8C00","#C93662","#FF3213","#7CBB15","#30ADE5"];
-  
+
    function generation(){ 
         presentshape.forEach(index=>{
             squares[index+currpos].style.backgroundColor = colors[random];
@@ -217,7 +217,11 @@ function tetmusic(){
         for(let i=0;i<=9;i++){
             if(block[i].classList.contains('stopped')){
                 const heading = document.getElementById('heading');
+                const scoredisp = document.getElementById('displayscore');
                 heading.innerHTML = 'GAME OVER';
+                scoredisp.innerHTML = 'SCORE: '+score;
+                scoredisp.style.display = 'block';
+                scoredisp.style.backgroundColor = 'navy';
                 clearInterval(myInterval);
                 window.removeEventListener('keydown',control);
             }
