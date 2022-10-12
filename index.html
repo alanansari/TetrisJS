@@ -1,23 +1,138 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TetrisJS</title>
-    <!-- Stylesheet -->
-    <link rel="stylesheet" href="css/style.css">
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bungee+Spice&display=swap" rel="stylesheet">
-</head>
-<body>
-    <button><img src="img/mute.png" alt="play/pause"></button>
-    
-    <div id="heading">TETRIS</div>
-    <div id="console">
-    </div>
-    <script src="js/script.js"></script>
-</body>
+  <head>
+     <meta charset="UTF-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>TETRIS</title>
+  </head>
+ <body>
+      <style>
+         * {
+         margin: 0;
+         padding: 0;
+         box-sizing: border-box;
+         }
+      
+         body {
+          background-color: black;
+          height: 100vh;
+          }
+         #container {
+         align-items: center;
+         display: flex;
+         flex-direction: column;
+         }
+      
+         #logo {
+         max-width: 70vw;
+         margin: 0 auto;
+         }
+      
+          #start {
+         width: 200px;
+         height: 60px;
+         font-size: 20px;
+         background-color: #230899;
+         color: #ffffff;
+         border-radius: 20px;
+         margin-bottom: 50px;
+         }
+      
+         #start:hover {
+          font-size: 22px;
+          font-weight: 600;
+         transform: scale(1.1);
+         color: rgb(18, 13, 13);
+         background-color: rgb(255, 238, 0);
+         transition: all 0.1s;
+         cursor: pointer;
+         }
+      
+         #rules {
+         background-color: rgba(144, 144, 144, 0.737);
+         color: beige;
+         width: 150px;
+         height: 50px;
+         font-size: 18px;
+         border-radius: 20px;
+         margin-bottom: 40px;
+         }
+      
+         #rules:hover {
+         cursor: pointer;
+         transform: scale(1.1);
+         transition: all 0.1s;
+         color: rgb(18, 13, 13);
+         background-color: rgb(255, 238, 0);
+         }
+      
+         #controls {
+         display: none;
+         margin: 0 auto;
+         flex-direction: column;
+         align-items: center;
+         border: 2px solid grey;
+         border-radius: 10px;
+         }
+      
+         #control {
+         display: inline;
+         color: yellow;
+         display: flex;
+         margin-bottom: 20px;
+         font-size: 35px;
+         }
+      
+         #rule {
+         color: azure;
+         margin-bottom: 30px;
+         }
+       </style>   
+
+     <div id="container">
+         <img src="img/tetrislogo.png" alt="" id="logo">
+         <a href="game.html">
+         <button id="start">Start Game</button>
+         </a>
+         <button id="rules">Rules</button>
+     </div>
+     <div id="controls">
+         <div id="control">Controls</div>
+         <div>
+             <ul id="rule">
+                 <li>a/ ArrowLeft : Left Movement</li>
+                 <li>d/ ArrowRight : Right Movement</li>
+                 <li>s/ ArrowDown : Move Down</li>
+                 <li>w/ ArrowUp : Rotation of Shapes</li>
+                 <li>space bar : pause</li>
+                 <li>m : mute/unmute</li>
+                 <br>
+                 <li>TOUCH CONTROLS: </li>
+                 <li>Swipe Left : Left Movement</li>
+                 <li>Swipe Right : Right Movement</li>
+                 <li>Swipe Down : Move Down</li>
+                 <li>Swipe Up : Rotation of Shapes</li>
+              </ul>
+         </div>
+     </div>
+     <script>
+      let rules = document.getElementById("rules");
+let controls = document.getElementById("controls");
+let rules_condition = 0;
+rules.addEventListener('click', rule);
+function rule() {
+  if (rules_condition == 0)
+    rules_condition = 1;
+  else {
+    rules_condition = 0;
+  }
+  if (rules_condition == 1)
+    controls.style.display = "flex";
+  else {
+    controls.style.display = "none";
+  }
+}
+     </script>
+   </body>
 </html>
