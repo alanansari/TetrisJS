@@ -54,18 +54,21 @@ for(let i=0;i<21;i++){
         if(i!=20)
         newDiv.setAttribute("class","no-block");
         else{
-            newDiv.setAttribute("class","border");
-            newDiv.classList.add('stopped');
+            newDiv.setAttribute("class","stopped");
         }
         container.appendChild(newDiv);
     }
 }
 
 let squares = Array.from(document.querySelectorAll('.no-block,.stopped'));
+
+
+//                          GAME MUSIC
+
 let music = new Audio('audio/tetaudio.mp3');
 music.loop = true;
-const playbtn = document.getElementsByTagName('button');
-playbtn[0].addEventListener('click',tetmusic);
+const playbtn = document.getElementById('btn1');
+playbtn.addEventListener('click',tetmusic);
 const image = document.getElementsByTagName('img');
 let mplay = 0;
 
@@ -91,15 +94,8 @@ function tetmusic(){
    let random = Math.floor(Math.random()*tetrominoes.length);
    let presentshape = tetrominoes[random][currRot];
 
-  const colors = [
-   "#FFD500",
-   "#40FF",
-   "#FF8C00",
-   "#C93662",
-   "#FF3213",
-   "#7CBB15",
-   "#30ADE5"
-  ]
+  const colors = ["#FFD500","#40FF","#FF8C00","#C93662","#FF3213","#7CBB15","#30ADE5"];
+
    function generation(){ 
         presentshape.forEach(index=>{
             squares[index+currpos].style.backgroundColor = colors[random];
@@ -133,27 +129,84 @@ function tetmusic(){
     // control movement of blocks
 
     function control(input){
-        if(input==='a'||input==='ArrowLeft'){
+        if(input.key==='a'||input.key==='ArrowLeft'){
             moveLeft();
         }
-        else if(input==='d'||input==='ArrowRight'){
+        else if(input.key==='d'||input.key==='ArrowRight'){
             moveRight();
         }
-        else if(input==='s'||input==='ArrowDown'){
+        else if(input.key==='s'||input.key==='ArrowDown'){
             moveDown();
         }
-        else if(input=== 'w'||input==='ArrowUp'){
+        else if(input.key=== 'w'||input.key==='ArrowUp'){
             rotation();
         }
-        else if(input === ' '){
+        else if(input.key === ' '){
+            if(game===1){
+                pausebtnimg.src = 'img/play-button.png';
+                game=0;
+            }else{
+                pausebtnimg.src = 'img/pause.png';
+                game=1;
+            }
             pause();
+        }
+        else if(input.key === 'm'||input.key==='M'){
+            tetmusic();
         }
 
     }
-    window.addEventListener('keydown',function(event){
-         control(event.key);
-        });
+
+    window.addEventListener('keydown',control);
     
+    // TOUCH CONTROLS
+
+    let touchstartX = 0, touchstartY = 0;
+    let touchendX = 0, touchendY = 0;
+
+    window.addEventListener('touchstart',function(event){
+        event.preventDefault();
+        touchstartX = event.touches[0].clientX;
+        touchstartY = event.touches[0].clientY;
+    });
+    
+    window.addEventListener('touchend',function(event){
+        touchendX = event.changedTouches[0].clientX;
+        touchendY = event.changedTouches[0].clientY;
+        handle();
+    });
+
+    function handle(){
+        let distX = Math.abs(touchstartX-touchendX);
+        let distY = Math.abs(touchstartY-touchendY);
+        if(!(distX<=50&&distY<=30)){
+            if(distX>distY){
+                if(touchstartX<touchendX)      // right
+                    moveRight();
+                if(touchstartX>touchendX)       // left
+                    moveLeft();
+            }else{
+                if(touchstartY<touchendY)       // down
+                    moveDown();
+                if(touchstartY>touchendY)       // up
+                    rotation();
+            }
+        }
+    }
+    
+    let game = 1;
+    const pausebtn = document.getElementById('btn2');
+    const pausebtnimg = document.getElementById('img2');
+    pausebtn.addEventListener('click',function(){
+        if(game===1){
+            pausebtnimg.src = 'img/play-button.png';
+            game=0;
+        }else{
+            pausebtnimg.src = 'img/pause.png';
+            game=1;
+        }
+        pause();
+    });
     
     function moveDown(){
         deletion();
@@ -219,8 +272,13 @@ function tetmusic(){
         for(let i=0;i<=9;i++){
             if(block[i].classList.contains('stopped')){
                 const heading = document.getElementById('heading');
+                const scoredisp = document.getElementById('displayscore');
                 heading.innerHTML = 'GAME OVER';
+                scoredisp.innerHTML = 'SCORE: '+score;
+                scoredisp.style.display = 'block';
+                scoredisp.style.backgroundColor = 'navy';
                 clearInterval(myInterval);
+                window.removeEventListener('keydown',control);
             }
         }
     }
