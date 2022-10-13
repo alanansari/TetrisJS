@@ -192,9 +192,10 @@ const Otet = [
           // left
           moveLeft();
       } else {
-        if (touchstartY < touchendY)
+        if (touchstartY < touchendY){
           // down
           moveDown();
+        }
         if (touchstartY > touchendY)
           // up
           rotation();
@@ -291,8 +292,12 @@ const Otet = [
         scoredisp.innerHTML = "SCORE: " + score;
         scoredisp.style.display = "block";
         scoredisp.style.backgroundColor = "navy";
+        scoredisp.style.top = Number((window.innerHeight)/2) + 'px';
+        scoredisp.style.left = Number((window.innerWidth)/3) + 'px';
         clearInterval(myInterval);
         window.removeEventListener("keydown", control);
+        // window.removeEventListener("touchstart");
+        // window.removeEventListener("touchend");
       }
     }
   }
