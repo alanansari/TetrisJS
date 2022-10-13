@@ -122,12 +122,12 @@ const Otet = [
         presentshape.forEach((index) =>
           squares[currpos + index].classList.add("stopped")
         );
+        remRow();
         random = Math.floor(Math.random() * tetrominoes.length);
         presentshape = tetrominoes[random][0];
         currpos = 4;
         generation();
         endgame();
-        remRow();
         num = true;
       }
     }
