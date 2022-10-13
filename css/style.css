@@ -1,5 +1,6 @@
 html,body{
-    overscroll-behavior-y: contain;
+    overflow-y: hidden;
+    
 }
 
 body{
@@ -32,8 +33,6 @@ button img{
 #displayscore {
     display: none;
     position: absolute;
-    top: 44vh;
-    left: 38vw;
     z-index: 1;
     font-size: 5vw;
     border-radius: 5px;
